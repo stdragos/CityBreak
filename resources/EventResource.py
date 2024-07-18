@@ -9,7 +9,7 @@ db = Database.db
 eventService = EventService()
 
 
-class Events(Resource):
+class EventResource(Resource):
     def get(self):
         city = request.args.get('city')
         date = request.args.get('date')
@@ -35,7 +35,7 @@ class Events(Resource):
             db.session.add(event)
             db.session.commit()
 
-            return json.dumps(event), 201
+            return event.to_dict(), 201
 
         else:
             return res[0], res[1]
@@ -64,7 +64,7 @@ class Events(Resource):
                 db.session.add(obj_to_edit[0])
                 db.session.commit()
 
-                return "OK", 201
+                return obj_to_edit[0].to_dict(), 201
 
             else:
                 return f'Invalid id', 404

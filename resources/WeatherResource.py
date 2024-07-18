@@ -8,7 +8,7 @@ db = Database.db
 weather_service = WeatherService()
 
 
-class Weathers(Resource):
+class WeatherResource(Resource):
     def get(self):
         city = request.args.get('city')
         date = request.args.get('date')
@@ -67,7 +67,7 @@ class Weathers(Resource):
                 db.session.add(obj_to_edit[0])
                 db.session.commit()
 
-                return "OK", 201
+                return obj_to_edit[0].to_dict(), 201
 
             else:
                 return f'Invalid id', 404

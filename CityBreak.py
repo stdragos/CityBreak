@@ -1,8 +1,8 @@
 from flask import *
 from flask_restful import Api
 import models.Database as Database
-from resources.WeatherResource import Weathers
-from resources.EventResource import Events
+from resources.WeatherResource import WeatherResource
+from resources.EventResource import EventResource
 
 import os
 
@@ -33,8 +33,8 @@ def index():
     '''
 
 
-api.add_resource(Events, '/event')
-api.add_resource(Weathers, '/weather')
+api.add_resource(EventResource, '/event')
+api.add_resource(WeatherResource, '/weather')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
