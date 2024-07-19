@@ -1,11 +1,9 @@
 import requests
 from flask import *
-from flask_restful import Api
-import models.Database as Database
-# from resources.EventResource import EventResource
 from flask_restful import Resource
 
 EVENT_URL = 'http://127.0.0.1:5002/event'
+
 
 class EventAPI(Resource):
     def get(self):
@@ -23,7 +21,3 @@ class EventAPI(Resource):
     def delete(self):
         response = requests.delete(EVENT_URL, params=request.args)
         return response.json(), response.status_code
-
-
-
-

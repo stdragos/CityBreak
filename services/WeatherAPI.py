@@ -1,9 +1,5 @@
 import requests
 from flask import *
-from flask_restful import Api
-import models.Database as Database
-from resources.WeatherResource import WeatherResource
-import resources.WeatherResource as weatherResource
 from flask_restful import Resource
 
 WEATHER_URL = 'http://127.0.0.1:5001/weather'

@@ -1,17 +1,12 @@
 from threading import Thread
-
 from flask import *
 from flask_restful import Api
-
 from services.EventAPI import EventAPI
 from services.WeatherAPI import WeatherAPI
 
-import resources.EventResource as eventResource
-import resources.WeatherResource as weatherResource
-import os
-
 gateway_app = Flask('Citybreak')
 api = Api(gateway_app)
+
 
 @gateway_app.route('/')
 def index():

@@ -1,6 +1,5 @@
 from flask import *
 from sqlalchemy import *
-from dateutil.parser import parse
 from datetime import date as ddate, datetime
 import models.Database as Database
 from models.Event import Event

@@ -1,5 +1,5 @@
 import pytest
-from CityBreak import gateway_app
+from main.CityBreak import gateway_app
 
 @pytest.fixture()
 def client():
