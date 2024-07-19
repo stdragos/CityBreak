@@ -1,5 +1,5 @@
 import pytest
-from CityBreak import app
+from CityBreak import gateway_app
 
 @pytest.fixture()
 def client():
@@ -10,8 +10,8 @@ def client():
         :return: App for testing
         """
 
-    app.config['TESTING'] = True
-    client = app.test_client()
+    gateway_app.config['TESTING'] = True
+    client = gateway_app.test_client()
 
     yield client
 

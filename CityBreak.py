@@ -1,29 +1,19 @@
+from threading import Thread
+
 from flask import *
 from flask_restful import Api
-import models.Database as Database
-from resources.WeatherResource import WeatherResource
-from resources.EventResource import EventResource
 
+from services.EventAPI import EventAPI
+from services.WeatherAPI import WeatherAPI
+
+import resources.EventResource as eventResource
+import resources.WeatherResource as weatherResource
 import os
 
-app = Flask('Citybreak')
+gateway_app = Flask('Citybreak')
+api = Api(gateway_app)
 
-db_host = os.environ.get('DB_HOST') or 'localhost'
-db_user = os.environ.get('DB_USER') or 'myuser'
-db_pw = os.environ.get('DB_PASSWORD') or 'mypassword'
-
-db_url = f'mysql://{db_user}:{db_pw}@{db_host}/citybreak'
-
-app.config['SQLALCHEMY_DATABASE_URI'] = db_url
-api = Api(app)
-
-db = Database.db
-db.init_app(app)
-
-with app.app_context():
-    db.create_all()
-
-@app.route('/')
+@gateway_app.route('/')
 def index():
     return '''
     <html> <body> <strong> <h1>
@@ -33,8 +23,23 @@ def index():
     '''
 
 
-api.add_resource(EventResource, '/event')
-api.add_resource(WeatherResource, '/weather')
+api.add_resource(EventAPI, '/event')
+api.add_resource(WeatherAPI, '/weather')
+
+
+def run_app(application, port):
+    application.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)
+
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    gateway_app.run(host='0.0.0.0', port=5000, debug=True)
+
+    # weather_thread = Thread(target=run_app, args=(weatherResource.app, 5001,))
+    # event_thread = Thread(target=run_app, args=(eventResource.app, 5002,))
+    #
+    # weather_thread.start()
+    # event_thread.start()
+    #
+    #
+    # weather_thread.join()
+    # event_thread.join()
