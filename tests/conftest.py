@@ -1,8 +1,10 @@
 import pytest
 from main.CityBreak import gateway_app
+from main.EventMain import event_app
+from main.WeatherMain import weather_app
 
 @pytest.fixture()
-def client():
+def main_client():
     """Configures the app for testing
 
         Sets app config variable ``TESTING`` to ``True``
@@ -11,11 +13,26 @@ def client():
         """
 
     gateway_app.config['TESTING'] = True
-    client = gateway_app.test_client()
+    main_client = gateway_app.test_client()
 
-    yield client
+    yield main_client
 
+
+@pytest.fixture()
+def weather_client():
+    gateway_app.config['TESTING'] = True
+    weather_client = gateway_app.test_client()
+
+    yield weather_client
+
+@pytest.fixture()
+def event_client():
+    gateway_app.config['TESTING'] = True
+    event_client = gateway_app.test_client()
+
+    yield event_client
 
 @pytest.fixture()
 def runner(application):
     return application.test_cli_runner()
+

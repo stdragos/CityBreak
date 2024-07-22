@@ -64,6 +64,8 @@ class EventResource(Resource):
                 obj_to_edit[0].date = date if date else obj_to_edit[0].date
                 obj_to_edit[0].title = title if title else obj_to_edit[0].title
                 obj_to_edit[0].description = description if description else obj_to_edit[0].description
+                obj_to_edit[0].price = price if price else obj_to_edit[0].price
+                obj_to_edit[0].location = location if location else obj_to_edit[0].location
 
                 db.session.add(obj_to_edit[0])
                 db.session.commit()
