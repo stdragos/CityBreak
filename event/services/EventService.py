@@ -1,8 +1,8 @@
 from flask import *
 from sqlalchemy import *
 from datetime import date as ddate, datetime
-import models.Database as Database
-from models.Event import Event
+import event.databases.EventDatabase as Database
+from event.models.Event import Event
 
 db = Database.db
 

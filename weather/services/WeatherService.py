@@ -1,8 +1,8 @@
 from flask import *
 from sqlalchemy import *
-from datetime import date as ddate, datetime
-import models.Database as Database
-from models.Weather import Weather
+from datetime import datetime
+import weather.databases.WeatherDatabase as Database
+from weather.models.Weather import Weather
 
 db = Database.db
 

@@ -1,7 +1,6 @@
 import pytest
-from main.CityBreak import gateway_app
-from main.EventMain import event_app
-from main.WeatherMain import weather_app
+from gateway.CityBreak import gateway_app
+
 
 @pytest.fixture()
 def main_client():

@@ -1,7 +1,7 @@
 from flask import *
 from flask_restful import Api
-import models.Database as Database
-from resources.EventResource import EventResource
+import event.databases.EventDatabase as Database
+from event.resources.EventResource import EventResource
 import os
 
 event_app = Flask('events')

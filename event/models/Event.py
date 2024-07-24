@@ -1,4 +1,4 @@
-import models.Database as Database
+import event.databases.EventDatabase as Database
 
 db = Database.db
 

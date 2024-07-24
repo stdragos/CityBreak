@@ -1,5 +1,5 @@
-import models.Database as Database
-from resources.WeatherResource import WeatherResource
+import weather.databases.WeatherDatabase as Database
+from weather.resources.WeatherResource import WeatherResource
 from flask import *
 from flask_restful import Api
 

@@ -1,4 +1,4 @@
-import models.Database as Database
+import weather.databases.WeatherDatabase as Database
 
 db = Database.db
 

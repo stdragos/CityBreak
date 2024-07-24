@@ -1,42 +1,43 @@
-import models.Database as Database
-from models.Weather import Weather
-from services.WeatherService import WeatherService
 from flask import *
+import event.databases.EventDatabase as Database
+from event.services.EventService import EventService
+from event.models.Event import Event
 from flask_restful import Resource
 
 db = Database.db
-weather_service = WeatherService()
+
+eventService = EventService()
 
 
-class WeatherResource(Resource):
+class EventResource(Resource):
     def get(self):
         city = request.args.get('city')
         date = request.args.get('date')
-        celsius = request.args.get('celsius')
+        title = request.args.get('title')
+        date_filter = request.args.get('date_filter')
+        price = request.args.get('price')
+        location = request.args.get('location')
 
-        if celsius is None:
-            celsius = "true"
-        else:
-            celsius = celsius.lower()
+        if date_filter != 'past' and date_filter != 'future':
+            date_filter = None
 
-        return weather_service.get(city=city, date=date, celsius=celsius)
+        return eventService.get(city, date, title, date_filter, price, location)
 
     def post(self):
         city = request.args.get('city')
         date = request.args.get('date')
-        temperature = request.args.get('temperature')
-        humidity = request.args.get('humidity')
+        title = request.args.get('title')
         description = request.args.get('description')
+        price = request.args.get('price')
+        location = request.args.get('location')
 
-        res = weather_service.check_fields(city, date, temperature, humidity, description)
-
+        res = eventService.check_fields(city, date, title, description, price, location)
         if res[1] == 201:
-            weather = Weather(city=city, date=date, temperature=temperature, humidity=humidity, description=description,
-                              active=True)
-            db.session.add(weather)
+            event = Event(city=city, date=date, title=title, description=description, price=price, location=location, active=True)
+            db.session.add(event)
             db.session.commit()
 
-            return weather.to_dict(), 201
+            return event.to_dict(), 201
 
         else:
             return res[0], res[1]
@@ -45,24 +46,26 @@ class WeatherResource(Resource):
         id = request.args.get('id')
         city = request.args.get('city')
         date = request.args.get('date')
-        temperature = request.args.get('temperature')
-        humidity = request.args.get('humidity')
+        title = request.args.get('title')
+        price = request.args.get('price')
+        location = request.args.get('location')
         description = request.args.get('description')
 
         if id is None:
             return f'You must insert an ID', 404
 
-        res = weather_service.check_fields(city, date, temperature, humidity, description)
+        res = eventService.check_fields(city, date, title, description, price, location)
 
         if res[1] == 201:
 
-            obj_to_edit = db.session.query(Weather).filter(Weather.id == id).all()
+            obj_to_edit = db.session.query(Event).filter(Event.id == id).all()
             if obj_to_edit:
                 obj_to_edit[0].city = city if city else obj_to_edit[0].city
                 obj_to_edit[0].date = date if date else obj_to_edit[0].date
-                obj_to_edit[0].temperature = temperature if temperature else obj_to_edit[0].temperature
-                obj_to_edit[0].humidity = humidity if humidity else obj_to_edit[0].humidity
+                obj_to_edit[0].title = title if title else obj_to_edit[0].title
                 obj_to_edit[0].description = description if description else obj_to_edit[0].description
+                obj_to_edit[0].price = price if price else obj_to_edit[0].price
+                obj_to_edit[0].location = location if location else obj_to_edit[0].location
 
                 db.session.add(obj_to_edit[0])
                 db.session.commit()
@@ -78,7 +81,7 @@ class WeatherResource(Resource):
     def delete(self):
         id = request.args.get('id')
         if id:
-            obj_to_edit = db.session.query(Weather).filter(Weather.id == id).all()
+            obj_to_edit = db.session.query(Event).filter(Event.id == id).all()
 
             if obj_to_edit:
                 if not obj_to_edit[0].active:
@@ -91,6 +94,4 @@ class WeatherResource(Resource):
                 return f'Invalid id', 404
         else:
             return f'Invalid id', 404
-
-
 
