@@ -1,6 +1,7 @@
-import weather.databases.WeatherDatabase as Database
+import WeatherDatabase as WeatherDatabase
 
-db = Database.db
+
+db = WeatherDatabase.db
 
 
 class Weather(db.Model):

@@ -1,6 +1,4 @@
-import event.databases.EventDatabase as Database
-
-db = Database.db
+from EventDatabase import db
 
 
 class Event(db.Model):

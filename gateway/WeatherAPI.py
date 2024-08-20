@@ -2,22 +2,22 @@ import requests
 from flask import *
 from flask_restful import Resource
 
-EVENT_URL = 'http://127.0.0.1:5002/event'
+WEATHER_URL = 'localhost:5001/weather'
 
 
-class EventAPI(Resource):
+class WeatherAPI(Resource):
     def get(self):
-        response = requests.get(EVENT_URL, params=request.args)
+        response = requests.get(WEATHER_URL, params=request.args)
         return response.json(), response.status_code
 
     def put(self):
-        response = requests.put(EVENT_URL, params=request.args)
+        response = requests.put(WEATHER_URL, params=request.args)
         return response.json(), response.status_code
 
     def post(self):
-        response = requests.post(EVENT_URL, params=request.args)
+        response = requests.post(WEATHER_URL, params=request.args)
         return response.json(), response.status_code
 
     def delete(self):
-        response = requests.delete(EVENT_URL, params=request.args)
+        response = requests.delete(WEATHER_URL, params=request.args)
         return response.json(), response.status_code

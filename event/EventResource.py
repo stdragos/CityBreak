@@ -1,10 +1,8 @@
 from flask import *
-import event.databases.EventDatabase as Database
-from event.services.EventService import EventService
-from event.models.Event import Event
+from EventDatabase import db
+from EventService import EventService
+from Event import Event
 from flask_restful import Resource
-
-db = Database.db
 
 eventService = EventService()
 

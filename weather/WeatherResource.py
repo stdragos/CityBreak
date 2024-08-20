@@ -1,10 +1,11 @@
-import weather.databases.WeatherDatabase as Database
-from weather.models.Weather import Weather
-from weather.services.WeatherService import WeatherService
+import WeatherDatabase as WeatherDatabase
+
+from Weather import Weather
+from WeatherService import WeatherService
 from flask import *
 from flask_restful import Resource
 
-db = Database.db
+db = WeatherDatabase.db
 weather_service = WeatherService()
 
 

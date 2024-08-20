@@ -1,10 +1,10 @@
 from flask import *
 from sqlalchemy import *
 from datetime import datetime
-import weather.databases.WeatherDatabase as Database
-from weather.models.Weather import Weather
+import WeatherDatabase as WeatherDatabase
+from Weather import Weather
 
-db = Database.db
+db = WeatherDatabase.db
 
 
 class WeatherService:
